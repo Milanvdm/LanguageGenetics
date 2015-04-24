@@ -16,10 +16,10 @@ public class TitleExtractor {
 		try {
 			
 			PrintWriter out = new PrintWriter("titles.txt");	
-			Parser parser = new Parser(file);
+			ArticleFinder parser = new ArticleFinder(file);
 			
 			while(parser.hasNext()) {
-				Page page = parser.next();
+				Article page = parser.next();
 				String title = page.title;
 				
 				out.println(title);

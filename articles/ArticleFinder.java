@@ -15,7 +15,7 @@ import java.util.NoSuchElementException;
  * 
  */
 
-public class Parser implements Closeable, Iterator<Page> {
+public class ArticleFinder implements Closeable, Iterator<Article> {
 
   /** Holds the reader*/
   protected BufferedReader wikipediaReader;
@@ -24,13 +24,13 @@ public class Parser implements Closeable, Iterator<Page> {
   protected boolean hasReachedEnd = false;
 
   /** Constructs a parser from the Wikipedia corpus file*/
-  public Parser(File wikipedia) throws IOException {
+  public ArticleFinder(File wikipedia) throws IOException {
     wikipediaReader = new BufferedReader(new FileReader(wikipedia));
   }
 
   /** Returns the next page*/
   @Override
-  public Page next() {
+  public Article next() {
     try {
       String title = wikipediaReader.readLine();
       if (title == null) throw new NoSuchElementException("Reached end of Wikipedia file");
@@ -40,7 +40,7 @@ public class Parser implements Closeable, Iterator<Page> {
         content.append(line).append(" ");
       }
       if (line == null) hasReachedEnd = true;
-      return (new Page(title, content.toString()));
+      return (new Article(title, content.toString()));
     } catch (IOException e) {
       throw new RuntimeException(e);
     }

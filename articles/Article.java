@@ -6,7 +6,7 @@ package articles;
  * @author Fabian M. Suchanek
  * 
  */
-public class Page {
+public class Article {
 
   /** Holds the page title*/
   public String title;
@@ -16,7 +16,7 @@ public class Page {
   
 
   /** Creates a page with title and content*/
-  public Page(String title, String content) {
+  public Article(String title, String content) {
     super();
     this.title = title;
     this.content = content;
@@ -43,7 +43,7 @@ public class Page {
     if (this == obj) return true;
     if (obj == null) return false;
     if (getClass() != obj.getClass()) return false;
-    Page other = (Page) obj;
+    Article other = (Article) obj;
     if (content == null) {
       if (other.content != null) return false;
     } else if (!content.equals(other.content)) return false;
