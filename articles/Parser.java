@@ -7,22 +7,24 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Random;
 
 
 public class Parser implements Closeable, Iterator<Article> {
 
-	/** Holds the reader*/
 	protected BufferedReader wikipediaReader;
 
-	/** TRUE if we have treated the last page*/
 	protected boolean hasReachedEnd = false;
+	
+	private final Random random;
+	private final int rankingFactor;
 
-	/** Constructs a parser from the Wikipedia corpus file*/
 	public Parser(File wikipedia) throws IOException {
+		this.random = new Random();
+		this.rankingFactor = 1000;
 		wikipediaReader = new BufferedReader(new FileReader(wikipedia));
 	}
 
-	/** Returns the next page*/
 	@Override
 	public Article next() {
 		try {
@@ -41,7 +43,8 @@ public class Parser implements Closeable, Iterator<Article> {
 				hasReachedEnd = true;
 			}
 			
-			return (new Article(title, content.toString()));
+			double weight = random.nextDouble() * rankingFactor;
+			return new Article(title, content.toString(), weight);
 			
 		} catch (IOException e) {
 			throw new RuntimeException(e);

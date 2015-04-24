@@ -6,18 +6,16 @@ public class Article implements Serializable {
 
 	private static final long serialVersionUID = -423208524655835319L;
 
-	/** Holds the page title*/
+	
 	private String title;
-
-	/** Holds the page content*/
 	private String content;
+	private double weight;
 
 
-	/** Creates a page with title and content*/
-	public Article(String title, String content) {
-		super();
+	public Article(String title, String content, double weight) {
 		this.title = title;
 		this.content = content;
+		this.weight = weight;
 	}
 
 	public String getTitle() {
@@ -27,13 +25,11 @@ public class Article implements Serializable {
 	public String getContent() {
 		return this.content;
 	}
-
-	/** Returns the first sentence of the page, without brackets */
-	public String firstSentence() {
-		int dotPos = content.indexOf(". ");
-		if (dotPos == -1) return (content.replaceAll("\\(.*?\\)", "") + ".");
-		return (content.substring(0, dotPos).replaceAll("\\(.*?\\)", "") + ".");
+	
+	public double getWeight() {
+		return this.weight;
 	}
+
 
 	@Override
 	public int hashCode() {

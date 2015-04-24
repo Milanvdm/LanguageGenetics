@@ -2,16 +2,17 @@ package articles;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ArticleExtractor {
 
 	private String pathWiki = "C:\\Users\\Milan\\Desktop\\School\\CUHK\\AI\\Paper\\LanguageGenetics\\wikipedia_pos.txt";
+	private ArticleDB articleDB;
+	
+	public ArticleExtractor() throws ClassNotFoundException, IOException {
+		articleDB = ArticleDB.getInstance();
+	}
 
-	public List<Article> getArticles() throws IOException {
-
-		List<Article> articles = new ArrayList<Article>();
+	public void getArticles() throws IOException {
 
 		File file = new File(pathWiki);
 
@@ -19,14 +20,12 @@ public class ArticleExtractor {
 
 		while(parser.hasNext()) {
 			Article article = parser.next();
-			articles.add(article);
+			articleDB.addArticle(article.getWeight(), article);
 		}
 
 		parser.close();
 
-		return articles;
 	}
-
 
 }
 
