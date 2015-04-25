@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
 import java.util.Random;
 
 
-public class Parser implements Closeable, Iterator<Article> {
+public class ArticleParser implements Closeable, Iterator<Article> {
 
 	protected BufferedReader wikipediaReader;
 
@@ -19,7 +19,7 @@ public class Parser implements Closeable, Iterator<Article> {
 	private final Random random;
 	private final int rankingFactor;
 
-	public Parser(File wikipedia) throws IOException {
+	public ArticleParser(File wikipedia) throws IOException {
 		this.random = new Random();
 		this.rankingFactor = 1000;
 		wikipediaReader = new BufferedReader(new FileReader(wikipedia));
@@ -63,9 +63,4 @@ public class Parser implements Closeable, Iterator<Article> {
 		wikipediaReader.close();
 	}
 
-	/** Unsupported*/
-	@Override
-	public void remove() {
-		throw new UnsupportedOperationException("Remove in Wikipedia parser");
-	}
 }

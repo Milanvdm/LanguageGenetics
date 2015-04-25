@@ -16,7 +16,7 @@ public class ArticleExtractor {
 
 		File file = new File(pathWiki);
 
-		Parser parser = new Parser(file);
+		ArticleParser parser = new ArticleParser(file);
 
 		while(parser.hasNext()) {
 			Article article = parser.next();

@@ -7,10 +7,12 @@ public class Node {
 	
 	private Tag tag;
 	private int probability;
+	private int amount;
 	
 	private List<Node> children;
 	
 	public Node(Tag tag, int probability) {
+		this.amount = 1;
 		this.tag = tag;
 		this.probability = probability;
 	}
@@ -80,6 +82,29 @@ public class Node {
 			}
 		}
 		return null;
+	}
+
+	public void addAmount() {
+		amount++;
+	}
+	
+	public int getAmount() {
+		return amount;
+	}
+
+	public void calculateProbabilities() {
+		int totalAmount = 0;
+		for(Node child: children) {
+			totalAmount = totalAmount + child.getAmount();
+		}
+		for(Node child: children) {
+			int probability = child.getAmount() / totalAmount;
+			child.setProbability(probability);
+		}
+	}
+
+	public void addChild(Node node) {
+		children.add(node);
 	}
 
 }

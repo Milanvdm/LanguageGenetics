@@ -1,5 +1,6 @@
 package articles;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import operators.ArticleTreeGenerator;
@@ -20,7 +21,7 @@ public class Article implements Serializable {
 		this.weight = weight;
 	}
 	
-	public Tree getTree() {
+	public Tree getTree() throws IOException {
 		ArticleTreeGenerator generator = new ArticleTreeGenerator();
 		return generator.generateTree(this);
 	}
