@@ -2,10 +2,12 @@ package articles;
 
 import java.io.Serializable;
 
+import operators.ArticleTreeGenerator;
+import tree.Tree;
+
 public class Article implements Serializable {
 
 	private static final long serialVersionUID = -423208524655835319L;
-
 	
 	private String title;
 	private String content;
@@ -16,6 +18,11 @@ public class Article implements Serializable {
 		this.title = title;
 		this.content = content;
 		this.weight = weight;
+	}
+	
+	public Tree getTree() {
+		ArticleTreeGenerator generator = new ArticleTreeGenerator();
+		return generator.generateTree(this);
 	}
 
 	public String getTitle() {
