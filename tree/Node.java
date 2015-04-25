@@ -6,13 +6,13 @@ import java.util.List;
 public class Node {
 	
 	private Tag tag;
-	private double probability;
+	private int probability;
 	
 	private List<Node> children;
 	
-	public Node(Tag tag, double probability) {
-		this.setTag(tag);
-		this.setProbability(probability);
+	public Node(Tag tag, int probability) {
+		this.tag = tag;
+		this.probability = probability;
 	}
 
 	public List<Node> getAllChildren() {
@@ -54,11 +54,11 @@ public class Node {
 		return maxWidth;
 	}
 
-	public double getProbability() {
+	public int getProbability() {
 		return probability;
 	}
 
-	public void setProbability(double probability) {
+	public void setProbability(int probability) {
 		this.probability = probability;
 	}
 
@@ -68,6 +68,18 @@ public class Node {
 
 	public void setTag(Tag tag) {
 		this.tag = tag;
+	}
+
+	public Node getParent(Node node) {
+		if(children.contains(node)) {
+			return this;
+		}
+		else {
+			for(Node child: children) {
+				return child.getParent(node);
+			}
+		}
+		return null;
 	}
 
 }
