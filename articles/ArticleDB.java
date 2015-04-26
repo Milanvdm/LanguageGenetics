@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NavigableMap;
 import java.util.Random;
 import java.util.TreeMap;
@@ -57,7 +59,7 @@ public class ArticleDB {
 		catch (FileNotFoundException e) {
 			ArticleExtractor articleExtractor = new ArticleExtractor();
 			articles = new TreeMap<Double, Article>();
-			articleExtractor.getArticles();
+			articleExtractor.getArticles(this);
 		}
 
 	}
@@ -70,5 +72,16 @@ public class ArticleDB {
 
 		oos.flush();
 		oos.close();
+	}
+	
+	@Override
+	public String toString() {
+		return "ArticleDB[amount=" + articles.size() + "]"; 
+	}
+
+	public List<Article> getArticles() {
+		List<Article> toReturn = new ArrayList<Article>();
+		toReturn.addAll(articles.values());
+		return toReturn;
 	}
 }

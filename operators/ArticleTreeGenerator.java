@@ -37,7 +37,7 @@ public class ArticleTreeGenerator {
 		Node parent = tree.getStartNode();
 		for(Tag tag: tags) {
 			boolean addingNode = true;
-			for(Node child: parent.getAllChildren()) {
+			for(Node child: parent.getChildren()) {
 				if(child.getTag() == tag) {
 					child.addAmount();
 					parent.calculateProbabilities();
@@ -54,7 +54,6 @@ public class ArticleTreeGenerator {
 				
 				parent = node;
 			}
-			
 		}
 	}
 
@@ -64,6 +63,7 @@ public class ArticleTreeGenerator {
 		
 		for(String word: Arrays.asList(words)) {
 			String[] partsOfWord = word.split("/");
+			//System.out.println(Arrays.toString(partsOfWord));
 			String possibleTag = partsOfWord[1];
 			try {
 				Tag foundTag = Tag.valueOf(possibleTag);

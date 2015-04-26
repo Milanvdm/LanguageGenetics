@@ -65,7 +65,7 @@ public class Article implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Page [title=" + title + "]";
+		return "Article [title=" + title + " content=" + content.length() + " rank=" + weight + "]";
 	}
 
 }

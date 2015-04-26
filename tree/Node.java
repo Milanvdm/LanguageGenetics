@@ -15,10 +15,18 @@ public class Node {
 		this.amount = 1;
 		this.tag = tag;
 		this.probability = probability;
+		
+		children = new ArrayList<Node>();
+	}
+	
+	public List<Node> getChildren() {
+		return children;
 	}
 
 	public List<Node> getAllChildren() {
 		List<Node> allChildren = new ArrayList<Node>();
+		
+		allChildren.addAll(children);
 		
 		for(Node child: children) {
 			allChildren.addAll(child.getAllChildren());
@@ -76,11 +84,12 @@ public class Node {
 		if(children.contains(node)) {
 			return this;
 		}
-		else {
-			for(Node child: children) {
+		for(Node child: children) {
+			if(child.getParent(node) != null) {
 				return child.getParent(node);
 			}
 		}
+		
 		return null;
 	}
 
@@ -98,13 +107,24 @@ public class Node {
 			totalAmount = totalAmount + child.getAmount();
 		}
 		for(Node child: children) {
-			int probability = child.getAmount() / totalAmount;
+			double tempProb = (double) child.getAmount() / totalAmount;
+			int probability = (int) (tempProb * 100);
 			child.setProbability(probability);
 		}
 	}
 
 	public void addChild(Node node) {
 		children.add(node);
+	}
+
+	public void printTree(String prefix, boolean isTail) {
+		System.out.println(prefix + (isTail ? "└── " : "├── ") + "[" + tag.toString() + ", " + probability + ", " + amount + "]");
+        for (int i = 0; i < children.size() - 1; i++) {
+            children.get(i).printTree(prefix + (isTail ? "    " : "│   "), false);
+        }
+        if (children.size() > 0) {
+            children.get(children.size() - 1).printTree(prefix + (isTail ?"    " : "│   "), true);
+        }
 	}
 
 }

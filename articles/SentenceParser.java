@@ -13,7 +13,7 @@ public class SentenceParser implements Iterator<String> {
 	
 	public SentenceParser(Article article) {
 		String content = article.getContent();
-		sentences = Arrays.asList(content.split("./."));
+		sentences = Arrays.asList(content.split(" ./. "));
 	}
 
 	@Override

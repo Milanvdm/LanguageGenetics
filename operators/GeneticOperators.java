@@ -11,7 +11,7 @@ import tree.Tree;
 public class GeneticOperators {
 
 	private final Random random = new Random();
-	private final int repairThreshold = 5;
+	private final int repairThreshold = 20;
 
 	public void crossover(Tree tree1, Tree tree2) {
 		List<Node> nodes1 = tree1.getAllNodes();
@@ -27,6 +27,9 @@ public class GeneticOperators {
 		
 		Node node1 = nodes1.get(index1);
 		Node node2 = nodes2.get(index2);
+		
+		tree1.changeProbability(node1, node2.getProbability());
+		tree2.changeProbability(node2, node1.getProbability());
 		
 		tree1.changeNode(node1, node2);
 		tree2.changeNode(node2, node1);
@@ -81,6 +84,7 @@ public class GeneticOperators {
 		}
 		
 		for(Node node: toRemove) {
+			tree.changeProbability(node, 0);
 			tree.removeNode(node);
 		}
 	}
