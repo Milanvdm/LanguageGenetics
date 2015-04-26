@@ -92,7 +92,7 @@ public class Tree {
 
 
 	private void calculateSimplicity() {
-		simplicityScore = widthFactor * getWidth() + depthFactor - getDepth();
+		simplicityScore = widthFactor * getWidth() + depthFactor * getDepth();
 	}
 
 

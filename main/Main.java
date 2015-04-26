@@ -31,10 +31,8 @@ public class Main {
 		}
 		
 		GeneticOperators operators = new GeneticOperators();
-		trees.get(0).printTree();
-		//operators.crossover(trees.get(0), trees.get(1));
-		operators.mutate(trees.get(0));
-		trees.get(0).printTree();
+		
+		System.out.println(trees.get(0).getSimplicityScore());
 	}
 
 
