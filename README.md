@@ -1,5 +1,7 @@
 # LanguageGenetics
 
+You can find the paper here: https://www.overleaf.com/read/gpnzbywgcvch
+
 Implemented functions:
 - Article extraction
 - Article selection based on rank
