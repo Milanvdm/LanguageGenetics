@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import tree.Node;
 import tree.Tag;
 import tree.Tree;
@@ -11,7 +12,8 @@ import tree.Tree;
 public class GeneticOperators {
 
 	private final Random random = new Random();
-	private final int repairThreshold = 20;
+	private final int probabilityThreshold = 20;
+	private final int depthThreshold = 10;
 
 	public void crossover(Tree tree1, Tree tree2) {
 		List<Node> nodes1 = tree1.getAllNodes();
@@ -51,11 +53,26 @@ public class GeneticOperators {
 		if(mutate == 0) {
 			mutateProbability(tree, node);
 		}
-		else {
+		else if(mutate == 1) {
 			mutateTag(node);
+		}
+		else {
+			mutateSubTree();
 		}
 		
 	}
+
+	//Not so useful
+	private void mutateSubTree() {
+		throw new NotImplementedException();
+	}
+
+	/*
+	private Node makeRandomNode() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	*/
 
 	private void mutateTag(Node node) {
 		Tag oldTag = node.getTag();
@@ -78,15 +95,22 @@ public class GeneticOperators {
 		List<Node> toRemove = new ArrayList<Node>();
 		
 		for(Node node: nodes) {
-			if(node.getProbability() < repairThreshold) {
+			if(node.getProbability() < probabilityThreshold) {
 				toRemove.add(node);
+				tree.changeProbability(node, 0);
+				tree.removeNode(node);
 			}
 		}
 		
-		for(Node node: toRemove) {
-			tree.changeProbability(node, 0);
-			tree.removeNode(node);
+		while(tree.getDepth() > depthThreshold) {
+			toRemove.addAll(tree.getLowestNodes());
+			for(Node node: toRemove) {
+				tree.changeProbability(node, 0);
+				tree.removeNode(node);
+			}
 		}
+		
+		
 	}
 
 }

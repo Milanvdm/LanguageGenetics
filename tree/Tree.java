@@ -1,5 +1,7 @@
 package tree;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Tree {
@@ -38,13 +40,9 @@ public class Tree {
 		int difference = node.getProbability() - probability;
 		node.setProbability(probability);
 
-		System.out.println("difference: " + difference);
-
 		Node parentNode = getParent(node);
 		System.out.println(parentNode);
 		int amountOfOtherChildren = parentNode.getChildren().size() - 1;
-
-		System.out.println("#children: " + amountOfOtherChildren);
 
 		if(amountOfOtherChildren == 0) {
 			for(Node child: parentNode.getChildren()) {
@@ -54,8 +52,6 @@ public class Tree {
 		else {
 			int remainder = difference % amountOfOtherChildren;
 			int restProbability = (int) Math.floor(difference / amountOfOtherChildren);
-
-			System.out.println("remainder: " + remainder + " " + "prob: " +  restProbability);
 
 			for(Node child: parentNode.getChildren()) {
 				if(child != node) {
@@ -97,13 +93,13 @@ public class Tree {
 
 
 
-	private double getDepth() {
+	public double getDepth() {
 		return startNode.getDepth();
 	}
 
 
 
-	private double getWidth() {
+	public double getWidth() {
 		return startNode.getWidth();
 	}
 
@@ -117,6 +113,49 @@ public class Tree {
 	public void printTree() {
 		startNode.printTree("", true);
 	}
+
+
+	public List<Node> getLowestNodes() {
+		List<Node> toReturn = new ArrayList<Node>();
+		for(Node node: allNodes) {
+			if(getDepth() == getDepthNode(node)) {
+				toReturn.add(node);
+			}
+		}
+		
+		return toReturn;
+	}
+	
+	private int getDepthNode(Node toFind) {
+        List<Node> nodesAtCurrentLevel = Collections.singletonList(startNode);
+
+        return recursiveSearch(0, toFind, nodesAtCurrentLevel);
+    }
+
+    private int recursiveSearch(int level, Node toFind, List<Node> nodesAtCurrentLevel) {
+        List<Node> nodesAtNextLevel = new ArrayList<Node>();
+
+        // Check if searchNode matches any node at current level
+        for (Node node : nodesAtCurrentLevel) {
+            // If it matches, we have found the node, return current level
+            if (node == toFind) {
+                return level;
+            }
+
+            // Add children of all nodes at current level in nodesAtNextLevel
+            if (node.getChildren().size() != 0) {
+                nodesAtNextLevel.addAll(node.getChildren());
+            }
+        }
+
+        // searchNode is not found at current level, increment level and continue search at next level if next level exists in tree
+        if (!nodesAtNextLevel.isEmpty()) {
+            return recursiveSearch(level + 1, toFind, nodesAtNextLevel);
+        }
+
+        // We have traversed entire tree. Node not found. Return -1
+        return -1;
+    }
 
 
 }
